@@ -117,7 +117,7 @@ const Hero: React.FC = () => {
       <div className={styles.heroContainer}>
         <div
           className={styles.headerContainer}
-          style={{ fontSize: isMobile ? "14px" : "16px" }}
+          style={{ fontSize: isMobile ? "12px" : "16px" }}
         >
           <div className={styles.nameContainer}>
             <img
