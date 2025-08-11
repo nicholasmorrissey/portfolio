@@ -65,7 +65,7 @@ const ToolbarPlugin: React.FC = () => {
       <Bold className={styles.toolbarButton} onClick={handleBold} />
       <Italic className={styles.toolbarButton} onClick={handleItalic} />
       <Highlighter className={styles.toolbarButton} onClick={handleHighlight} />
-      <Download className={styles.toolbarButton} onClick={handleDownload} />
+      {/* <Download className={styles.toolbarButton} onClick={handleDownload} /> */}
     </div>
   );
 };
