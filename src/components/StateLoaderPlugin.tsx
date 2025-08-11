@@ -1,12 +1,23 @@
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { $createHeadingNode, HeadingNode } from "@lexical/rich-text";
+import { createHeadlessEditor } from "@lexical/headless";
 import {
-  $createListNode,
   $createListItemNode,
-  ListNode,
+  $createListNode,
   ListItemNode,
-  $isListItemNode,
+  ListNode,
 } from "@lexical/list";
+import {
+  $createMarkNode,
+  $isMarkNode,
+  MarkNode,
+  type SerializedMarkNode,
+} from "@lexical/mark";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import {
+  $createHeadingNode,
+  HeadingNode,
+  type SerializedHeadingNode,
+} from "@lexical/rich-text";
+import { $dfs } from "@lexical/utils";
 import {
   $createParagraphNode,
   $createTextNode,
@@ -19,10 +30,7 @@ import {
   type SerializedLexicalNode,
 } from "lexical";
 import * as React from "react";
-import { createHeadlessEditor } from "@lexical/headless";
-import { $createMarkNode, $isMarkNode, MarkNode } from "@lexical/mark";
 import { mainEditorState } from "../utils/editorStates";
-import { $dfs } from "@lexical/utils";
 
 interface StateLoaderPluginProps {
   delay?: number;
@@ -116,7 +124,8 @@ const StateLoaderPlugin: React.FC<StateLoaderPluginProps> = ({
             const root = $getRoot();
 
             if (currentNode.type === "heading") {
-              const newHeadingNode = $createHeadingNode(currentNode.tag!);
+              const headingNode = currentNode as SerializedHeadingNode;
+              const newHeadingNode = $createHeadingNode(headingNode.tag);
               root.append(newHeadingNode);
               setCurrentElementNode(newHeadingNode);
             } else if (currentNode.type === "paragraph") {
@@ -124,7 +133,8 @@ const StateLoaderPlugin: React.FC<StateLoaderPluginProps> = ({
               root.append(newParagraphNode);
               setCurrentElementNode(newParagraphNode);
             } else if (currentNode.type === "mark") {
-              const newMarkNode = $createMarkNode(currentNode.ids!);
+              const markNode = currentNode as SerializedMarkNode;
+              const newMarkNode = $createMarkNode(markNode.ids!);
               currentElementNode!.append(newMarkNode);
               setCurrentElementNode(newMarkNode);
               setMarkCharacterCount(0);
@@ -148,7 +158,8 @@ const StateLoaderPlugin: React.FC<StateLoaderPluginProps> = ({
 
           setCurrentNodeIndex((prev) => prev + 1);
         } else {
-          const text = currentNode.text!;
+          const node = currentNode as any;
+          const text = node.text!;
           const character = text[currentCharIndex];
           if (character && currentElementNode) {
             if (

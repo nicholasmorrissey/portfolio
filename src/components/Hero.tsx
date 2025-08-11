@@ -34,7 +34,7 @@ const Hero: React.FC = () => {
   React.useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setIsTranslationSectionVisible(true);
           console.log("Translation section is visible");
         }
@@ -55,7 +55,7 @@ const Hero: React.FC = () => {
   React.useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setIsTechSectionVisible(true);
         }
       },
