@@ -8,7 +8,14 @@ import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { HeadingNode } from "@lexical/rich-text";
 import { ParagraphNode, TextNode } from "lexical";
-import { ArrowRightToLine, Github, Linkedin, Mail, MapPin } from "lucide-react";
+import {
+  ArrowRightToLine,
+  ArrowUp,
+  Github,
+  Linkedin,
+  Mail,
+  MapPin,
+} from "lucide-react";
 import * as React from "react";
 import styles from "../styles/Hero.module.scss";
 import StateLoaderPlugin from "./StateLoaderPlugin";
@@ -100,6 +107,9 @@ const Hero: React.FC = () => {
     const experienceMonths = Math.ceil(totalMonths % 12);
 
     return `${experienceYears} years, ${experienceMonths} months`;
+  };
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -568,16 +578,29 @@ const Hero: React.FC = () => {
                 alignItems: "center",
                 gap: "10px",
                 marginTop: "12px",
+                color: "var(--color-primary)",
               }}
             >
-              <div className={styles.signOffContact}>
+              <a
+                href="https://www.linkedin.com/in/nicholas-morrissey-60b7042aa/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.signOffContact}
+              >
                 <Linkedin className={styles.contactIcon} />
                 <span>LinkedIn</span>
-              </div>
-              <div className={styles.signOffContact}>
+              </a>
+              <a
+                href="mailto:morrissey.nicholas@gmail.com"
+                className={styles.signOffContact}
+              >
                 <Mail className={styles.contactIcon} />
                 <span>morrissey.nicholas@gmail.com</span>
-              </div>
+              </a>
+            </div>
+            <div onClick={scrollToTop} className={styles.backToTopButton}>
+              <ArrowUp className={styles.contactIcon} />
+              <span>Back to top</span>
             </div>
           </div>
         </div>

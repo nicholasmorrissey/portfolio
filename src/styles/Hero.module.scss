@@ -348,3 +348,12 @@
   align-items: center;
   gap: 6px;
 }
+
+.backToTopButton {
+  display: flex;
+  align-items: center;
+  margin-top: 24px;
+  gap: 6px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
