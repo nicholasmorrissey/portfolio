@@ -274,7 +274,7 @@ const Hero: React.FC = () => {
                 Jan 2021 - Aug 2023 · <b>2 yrs 8 mos</b>
               </span>
               <p className={styles.jobDescription}>
-                Developed a modern web task management application built with
+                Developed a modern task management web application built with
                 Typescript, React, Java, Go, and Material UI, which supported
                 critical organisational functions in a classified and high
                 stakes environment. I led the implementation of UI/UX and
@@ -297,11 +297,12 @@ const Hero: React.FC = () => {
                 Jan 2019 - Jan 2021 · <b>2 yrs 1 mo</b>
               </span>
               <p className={styles.jobDescription}>
-                Worked as a fullstack web developer, leading the development and
-                deployment of a comprehensive learning management system. I
-                collaborated closely with learning and development teams to
-                gather requirements, integrate identity systems for seamless
-                onboarding, and automate key data imports.
+                Worked across fullstack web architecture, leading the
+                integration and deployment of a COTS product learning management
+                system for a large government agency. I collaborated closely
+                with the provider and L&D teams to gather requirements,
+                integrate identity systems for seamless onboarding, and automate
+                the import of vital historic data.
               </p>
               <p className={styles.jobDescription}>
                 I also set up and configured web servers and databases,
