@@ -2,10 +2,20 @@
   background: #0a001c;
   display: flex;
   flex-direction: column;
+  // background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
+}
+
+.heroContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  background: radial-gradient(circle at 50% 30%, #3a006f 0%, transparent 50%);
+  padding: 20px;
+  padding-bottom: 60px;
 }
 
 .headerContainer {
-  height: 200px;
   width: 100%;
   align-items: center;
   display: flex;
@@ -13,11 +23,11 @@
 }
 
 .nameContainer {
-  height: 200px;
   width: 1200px;
   align-items: center;
   display: flex;
   justify-content: center;
+  margin: 1em 0em 2em 0em;
 }
 
 .nameTextContainer {
@@ -27,8 +37,8 @@
 }
 
 .profileImage {
-  width: 100px;
-  height: 100px;
+  width: 6em;
+  height: 6em;
   border-radius: 50%;
   object-fit: cover;
   margin-right: 20px;
@@ -36,11 +46,11 @@
 
 .title {
   color: white;
-  font-size: 36px;
+  font-size: 2em;
   font-weight: bold;
 }
 .subtitle {
-  font-size: 28px;
+  font-size: 1.8em;
   font-weight: bold;
   color: var(--color-primary);
   margin-bottom: 6px;
@@ -60,7 +70,13 @@
   gap: 6px;
   font-size: 14px;
   color: var(--color-primary);
+  opacity: 0.8;
 }
+.contactField:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
 .contactIcon {
   height: 20px;
   width: 20px;
@@ -69,11 +85,11 @@
 
 .portfolioSection,
 .portfolioSectionDark {
-  width: 100%;
   display: flex;
   align-items: center;
   color: white;
   flex-direction: column;
+  padding: 20px;
   padding-top: 40px;
   padding-bottom: 60px;
   background-color: var(--color-bg-primary);
@@ -87,39 +103,54 @@
 
 .documentEditorContainer {
   display: flex;
-  height: 800px;
-  background-color: var(--color-box-secondary);
+  min-height: 1060px;
   border-radius: 20px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.4);
+  margin-bottom: 40px;
+  background-color: #00000059;
+  height: fit-content;
+  transition: all 0.7s ease-out;
+  transform: translateY(50px);
 }
 
 .documentEditor {
   display: flex;
-  height: 800px;
+  min-height: 600px;
   background-color: var(--color-box-primary);
   border: 1px solid var(--color-box-border);
   border-radius: 20px;
-  width: 800px;
   flex-direction: column;
+  flex: 3;
+}
+
+.slideInHidden {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.slideInVisible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .documentToolbar {
   display: flex;
   align-items: center;
   padding-left: 12px;
-  background-color: #250657;
+  background-color: #381179;
   height: 40px;
   border-radius: 20px 20px 0px 0px;
 }
 
 .treeViewContainer {
-  width: 400px;
   border-radius: 20px;
   text-align: left;
   padding: 10px;
   padding-right: 20px;
+  height: 100%;
+  overflow: hidden;
+  flex: 1;
 }
-
 .toolbarButton {
   cursor: pointer;
   color: white;
@@ -136,7 +167,7 @@
 .translationEditorContainer {
   display: flex;
   border-radius: 20px;
-  width: 1200px;
+  transition: all 0.6s ease-out;
 }
 
 .translationSection {
@@ -161,7 +192,6 @@
 }
 
 .jobDescription {
-  margin-bottom: 35px;
   color: var(--color-text-subtle);
 }
 
@@ -178,6 +208,9 @@
   padding: 25px;
   border-radius: 20px;
   border: 1px solid var(--color-box-border);
+}
+.techCategory {
+  background: linear-gradient(135deg, #320b73 0%, #120729 100%);
 }
 
 .techCategorySecondary {
@@ -272,6 +305,7 @@
   flex-direction: column;
   width: 100%;
   max-width: 1200px;
+  transition: all 0.6s ease-out;
 }
 
 .sectionHeader {
@@ -301,4 +335,16 @@
 
 .subtleText {
   color: var(--color-text-subtle);
+}
+
+.signOffContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signOffContact {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }

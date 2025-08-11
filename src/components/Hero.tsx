@@ -17,6 +17,60 @@ import TranslationExample from "./TranslationExample";
 import TreeViewPlugin from "./TreeViewPlugin";
 
 const Hero: React.FC = () => {
+  const [isMobile, setIsMobile] = React.useState(false);
+  const [pageInitialized, setPageInitialized] = React.useState(false);
+
+  const [isTranslationSectionVisible, setIsTranslationSectionVisible] =
+    React.useState(false);
+  const translationSectionRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsTranslationSectionVisible(true);
+          console.log("Translation section is visible");
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (translationSectionRef.current) {
+      observer.observe(translationSectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const [isTechSectionVisible, setIsTechSectionVisible] = React.useState(false);
+  const techSectionRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsTechSectionVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (techSectionRef.current) {
+      observer.observe(techSectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  React.useEffect(() => {
+    setIsMobile(
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    );
+    setPageInitialized(true);
+  }, []);
+
   const nodeList = [
     HeadingNode,
     ParagraphNode,
@@ -48,147 +102,154 @@ const Hero: React.FC = () => {
     return `${experienceYears} years, ${experienceMonths} months`;
   };
 
-  const documentStrings = [
-    { type: "heading", text: "Document Editing Platform" },
-    {
-      type: "paragraph",
-      text: "I lead the frontend design and development of a Google Docs-style editor tailored to linguist and analyst workflows. Built with Typescript, React, and Lexical, it includes features such as:",
-    },
-    { type: "list", text: "" },
-    {
-      type: "listitem",
-      text: "🤖 Automatic AI translations and replacements",
-    },
-    {
-      type: "listitem",
-      text: "⚡ Live collaboration through websockets",
-    },
-    {
-      type: "listitem",
-      text: "💬 Commenting and annotation tools",
-    },
-    {
-      type: "listitem",
-      text: "👀 Review mode to track changes",
-    },
-    {
-      type: "listitem",
-      text: "📄 Import documents from Word, PDF, Excel, and more",
-    },
-    {
-      type: "listitem",
-      text: "📋 Export and print to PDF",
-    },
-    {
-      type: "listitem",
-      text: "✨ A suite of rich text formatting capabilities",
-    },
-    {
-      type: "paragraph",
-      text: "I conducted multiple user workshops to gather and validate requirements, created designs and code prototypes, and regularly presented demos to stakeholders and potential customers. I supported production releases and closely managed issue tickets and user feedback to refine and improve features.",
-    },
-    {
-      type: "paragraph",
-      text: "I mentored several new frontend developers in best practice Typescript and React development, directing and reviewing both code and design changes. With the big picture in mind, I kept the project and other team members' approach aligned to solve critical mission needs.",
-    },
-  ];
-
   return (
     <section className={styles.hero}>
-      <div className={styles.headerContainer}>
-        <div className={styles.nameContainer}>
-          <img
-            src="/profile.png"
-            alt="Nick Morrissey"
-            className={styles.profileImage}
-          />
-          <div className={styles.nameTextContainer}>
-            <h2 className={styles.title}>Nick Morrissey</h2>
-            <h3 className={styles.subtitle}>Frontend Developer</h3>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <MapPin
-                fill="#770000"
-                style={{ color: "red", marginRight: "6px" }}
-              />
-              <h4 style={{ color: "white" }}>Canberra, Australia</h4>
-              <h4 style={{ color: "white", marginLeft: "12px" }}>
-                <b
-                  style={{ color: "var(--color-primary)", marginRight: "8px" }}
+      <div className={styles.heroContainer}>
+        <div
+          className={styles.headerContainer}
+          style={{ fontSize: isMobile ? "14px" : "16px" }}
+        >
+          <div className={styles.nameContainer}>
+            <img
+              src="/profile.png"
+              alt="Nick Morrissey"
+              className={styles.profileImage}
+            />
+            <div className={styles.nameTextContainer}>
+              <h2 className={styles.title}>Nick Morrissey</h2>
+              <h3 className={styles.subtitle}>Frontend Developer</h3>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <MapPin
+                  fill="#770000"
+                  style={{
+                    color: "red",
+                    marginRight: "6px",
+                    fontSize: "1.5em",
+                  }}
+                />
+                <h4
+                  style={{
+                    color: "white",
+                    fontSize: isMobile ? "0.8em" : "1em",
+                  }}
                 >
-                  EXP
-                </b>
-                {getExperienceString()}
-              </h4>
+                  Canberra, Australia
+                </h4>
+                <h4
+                  style={{
+                    color: "white",
+                    marginLeft: "12px",
+                    fontSize: isMobile ? "0.8em" : "1em",
+                  }}
+                >
+                  <b
+                    style={{
+                      color: "var(--color-primary)",
+                      marginRight: "8px",
+                    }}
+                  >
+                    EXP
+                  </b>
+                  {getExperienceString()}
+                </h4>
+              </div>
             </div>
-          </div>
-          <div className={styles.contactContainer}>
-            <div className={styles.contactField}>
-              <span>LinkedIn</span>
-              <Linkedin className={styles.contactIcon} />
-            </div>
-            <div className={styles.contactField}>
-              <span>Github</span>
-              <Github className={styles.contactIcon} />
-            </div>
-            <div className={styles.contactField}>
-              <span>morrissey.nicholas@gmail.com</span>
-              <Mail className={styles.contactIcon} />
-            </div>
+            {!isMobile && (
+              <div className={styles.contactContainer}>
+                <a
+                  href="https://www.linkedin.com/in/nicholas-morrissey-60b7042aa/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.contactField}
+                >
+                  <span>LinkedIn</span>
+                  <Linkedin className={styles.contactIcon} />
+                </a>
+                <a
+                  href="https://github.com/nicholasmorrissey"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.contactField}
+                >
+                  <span>Github</span>
+                  <Github className={styles.contactIcon} />
+                </a>
+                <a
+                  href="mailto:morrissey.nicholas@gmail.com"
+                  className={styles.contactField}
+                >
+                  <span>morrissey.nicholas@gmail.com</span>
+                  <Mail className={styles.contactIcon} />
+                </a>
+              </div>
+            )}
           </div>
         </div>
-      </div>
 
-      <div className={styles.portfolioSection}>
         <div className={styles.columnContainer}>
-          <h2 className={styles.sectionHeader}>
-            <span className={styles.sectionHeaderText}>Currently</span>
-          </h2>
           <LexicalComposer initialConfig={initialConfig}>
-            <div className={styles.documentEditorContainer}>
+            <div
+              className={`${styles.documentEditorContainer} ${
+                pageInitialized ? styles.slideInVisible : styles.slideInHidden
+              }`}
+            >
               <div className={styles.documentEditor}>
                 <ToolbarPlugin />
-                <div style={{ flex: 1 }}>
-                  <div style={{ flex: 1, padding: "20px", height: "100%" }}>
-                    <RichTextPlugin
-                      contentEditable={
-                        <ContentEditable className={styles.contentEditable} />
-                      }
-                      ErrorBoundary={LexicalErrorBoundary}
-                    />
-                    <StateLoaderPlugin
-                      predefinedStrings={documentStrings}
-                      delay={6}
-                    />
-                    <HistoryPlugin />
-                    <OnChangePlugin onChange={() => {}} />
-                  </div>
+                <div
+                  style={{
+                    flex: 1,
+                    padding: "20px",
+                    background:
+                      "linear-gradient(180deg, #280d55 0%, #15072f 100%)",
+                    borderRadius: "0px 0px 20px 20px",
+                  }}
+                >
+                  <RichTextPlugin
+                    contentEditable={
+                      <ContentEditable className={styles.contentEditable} />
+                    }
+                    ErrorBoundary={LexicalErrorBoundary}
+                  />
+                  <StateLoaderPlugin delay={1} />
+                  <HistoryPlugin />
+                  <OnChangePlugin onChange={() => {}} />
                 </div>
               </div>
-              <div className={styles.treeViewContainer}>
-                <TreeViewPlugin />
-              </div>
+              {!isMobile && (
+                <div className={styles.treeViewContainer}>
+                  <TreeViewPlugin />
+                </div>
+              )}
             </div>
           </LexicalComposer>
         </div>
-      </div>
 
-      <div className={styles.portfolioSectionDark}>
+        <h3 style={{ marginBottom: "30px" }}>Powered by...</h3>
         <div className={styles.columnContainer}>
-          <h2 className={styles.sectionHeader}>
-            <span className={styles.sectionHeaderText}>Recently</span>
-          </h2>
-          <div className={styles.translationEditorContainer}>
-            <TranslationExample langIndex={1} isInput={true} />
-            <ArrowRightToLine
-              style={{
-                color: "var(--color-primary)",
-                margin: "12px",
-                alignSelf: "center",
-              }}
-            />
+          <div
+            ref={translationSectionRef}
+            className={`${styles.translationEditorContainer} ${
+              isTranslationSectionVisible
+                ? styles.slideInVisible
+                : styles.slideInHidden
+            }`}
+          >
+            {!isMobile && (
+              <>
+                <TranslationExample langIndex={1} isInput={true} />
+                <ArrowRightToLine
+                  style={{
+                    color: "var(--color-primary)",
+                    margin: "12px",
+                    alignSelf: "center",
+                  }}
+                />
+              </>
+            )}
             <TranslationExample langIndex={0} />
           </div>
         </div>
+        {/* </div> */}
       </div>
 
       <div className={styles.portfolioSection}>
@@ -276,18 +337,29 @@ const Hero: React.FC = () => {
       </div>
 
       <div className={styles.portfolioSectionDark}>
-        <div className={styles.columnContainer}>
+        <div
+          ref={techSectionRef}
+          className={`${styles.columnContainer} ${
+            isTechSectionVisible ? styles.slideInVisible : styles.slideInHidden
+          }`}
+        >
           <h2 className={styles.sectionHeader}>
             <span className={styles.sectionHeaderText}>
               Technologies and Languages
             </span>
           </h2>
-          <div style={{ display: "flex", gap: "20px" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              flexDirection: isMobile ? "column" : "row",
+            }}
+          >
             <div
               className={styles.techCategory}
               style={{ flex: 1, fontSize: "20px" }}
             >
-              <h2>UI Development</h2>
+              <h2>Frontend</h2>
               <ul>
                 <li>JavaScript</li>
                 <li>TypeScript</li>
@@ -376,11 +448,12 @@ const Hero: React.FC = () => {
                   backgroundColor: "var(--color-box-secondary)",
                 }}
               >
-                <h2>Game Development</h2>
+                <h2>Game Dev</h2>
                 <ul>
+                  <li>C#</li>
                   <li>Unity</li>
                   <li>Blender</li>
-                  <li>Cascaduer (Animation)</li>
+                  <li>Cascaduer </li>
                 </ul>
               </div>
               <div
@@ -477,14 +550,36 @@ const Hero: React.FC = () => {
 
       <div className={styles.portfolioSection}>
         <div className={styles.columnContainer}>
-          <h2 className={styles.sectionHeader}>
-            <span className={styles.sectionHeaderText}>
-              Thanks for visiting!
+          <div className={styles.signOffContainer}>
+            <h2
+              className={styles.sectionHeader}
+              style={{ marginBottom: "6px" }}
+            >
+              <span className={styles.sectionHeaderText}>
+                Thanks for visiting!
+              </span>
+            </h2>
+            <span className={styles.subtleText}>
+              Feel free to reach out via LinkedIn or email.
             </span>
-          </h2>
-          <span className={styles.subtleText}>
-            Feel free to reach out via LinkedIn or email.
-          </span>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                marginTop: "12px",
+              }}
+            >
+              <div className={styles.signOffContact}>
+                <Linkedin className={styles.contactIcon} />
+                <span>LinkedIn</span>
+              </div>
+              <div className={styles.signOffContact}>
+                <Mail className={styles.contactIcon} />
+                <span>morrissey.nicholas@gmail.com</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

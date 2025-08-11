@@ -44,7 +44,8 @@ const ToolbarPlugin: React.FC = () => {
       if (!$isRangeSelection(selection)) {
         return;
       }
-      $wrapSelectionInMarkNode(selection, selection.isBackward(), "highlight");
+      const randomId = Math.random().toString(36).substr(2, 9);
+      $wrapSelectionInMarkNode(selection, selection.isBackward(), randomId);
     });
   };
 
